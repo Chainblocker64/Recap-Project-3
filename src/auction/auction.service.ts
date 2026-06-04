@@ -21,6 +21,7 @@ export class AuctionService {
     const auctionPayload = this.auctionRepository.create({
       ...createAuctionDto,
       endDate: endDate,
+      currentPrice: createAuctionDto.startingPrice,
     });
 
     const auction = await this.auctionRepository.save(auctionPayload);

@@ -17,14 +17,17 @@ export class OfferService {
   constructor(
     @InjectRepository(Offer)
     private readonly offerRepository: Repository<Offer>,
+    @InjectRepository(Auction)
     private readonly auctionRepository: Repository<Auction>,
   ) {}
 
   async create(
-    id: number,
+    auctionId: number,
     createOfferDto: CreateOfferDto,
   ): Promise<OfferResponseDto> {
-    const auction = await this.auctionRepository.findOne({ where: { id } });
+    const auction = await this.auctionRepository.findOne({
+      where: { id: auctionId },
+    });
 
     if (!auction) {
       throw new NotFoundException();
@@ -38,8 +41,15 @@ export class OfferService {
       throw new ConflictException('Bid does not exceed current price');
     }
 
-    const offerPayload = this.offerRepository.create(createOfferDto);
+    const offerPayload = this.offerRepository.create({
+      ...createOfferDto,
+      auctionId: auctionId,
+    });
     const offer = await this.offerRepository.save(offerPayload);
+
+    await this.auctionRepository.update(auctionId, {
+      currentPrice: offer.bidPrice,
+    });
 
     return plainToInstance(OfferResponseDto, offer, {
       excludeExtraneousValues: true,
