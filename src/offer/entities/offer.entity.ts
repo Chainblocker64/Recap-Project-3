@@ -1,8 +1,11 @@
+import { Auction } from '../../auction/entities/auction.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   Column,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity('offers')
@@ -21,4 +24,10 @@ export class Offer {
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt!: Date;
+
+  @ManyToOne(() => Auction, (auction: Auction) => auction.offers, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'auctionId' })
+  auction!: Auction;
 }

@@ -1,24 +1,26 @@
 import {
   Controller,
   Get,
-  Post,
+  // Post,
   Body,
   Patch,
   Param,
   Delete,
 } from '@nestjs/common';
 import { OfferService } from './offer.service';
-import { CreateOfferDto } from './dto/create-offer.dto';
+// import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 
 @Controller('offers')
 export class OfferController {
   constructor(private readonly offerService: OfferService) {}
 
+  /*
   @Post()
   create(@Body() createOfferDto: CreateOfferDto) {
     return this.offerService.create(createOfferDto);
   }
+  */
 
   @Get()
   findAll() {
