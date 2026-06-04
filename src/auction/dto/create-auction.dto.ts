@@ -1,4 +1,11 @@
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 
 export class CreateAuctionDto {
   @IsString()
@@ -9,9 +16,12 @@ export class CreateAuctionDto {
   @IsNotEmpty()
   description!: string;
 
+  @IsNumber({ maxDecimalPlaces: 2 })
   @IsNotEmpty()
+  @Min(0)
   startingPrice!: number;
 
+  @IsOptional()
   @IsDateString()
   endDate!: Date;
 

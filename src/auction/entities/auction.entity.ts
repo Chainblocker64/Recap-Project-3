@@ -18,10 +18,10 @@ export class Auction {
   @Column({ type: 'varchar' })
   description!: string;
 
-  @Column({ type: 'numeric', scale: 2, nullable: true })
+  @Column({ type: 'numeric', scale: 2 })
   startingPrice!: number;
 
-  @Column({ type: 'numeric', scale: 2, nullable: true })
+  @Column({ type: 'numeric', scale: 2 })
   currentPrice!: number;
 
   @Column({ type: 'datetime' })

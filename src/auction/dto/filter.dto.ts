@@ -1,0 +1,42 @@
+import { IsInt, IsOptional, Min, Max, IsIn, IsNumber } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+
+export class FilterDto {
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Type(() => Number)
+  page: number = 1;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(100)
+  @Type(() => Number)
+  limit: number = 10;
+
+  @IsOptional()
+  @IsIn(['open', 'closed'])
+  @Type(() => String)
+  status!: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0.01)
+  @Type(() => Number)
+  @Transform(() => 'min-price')
+  minPrice: number = 10;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0.01)
+  @Type(() => Number)
+  @Transform(() => 'max-price')
+  maxPrice: number = 10;
+
+  //TODO
+  @IsOptional()
+  @IsIn(['asc', 'desc'])
+  @Type(() => String)
+  sort!: string;
+}
