@@ -18,16 +18,24 @@ export class AuctionService {
       ? new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // Default to 3 days from now
       : new Date(createAuctionDto.endDate);
 
-    const auction = this.auctionRepository.create({
+    const auctionPayload = this.auctionRepository.create({
       ...createAuctionDto,
       endDate: endDate,
     });
 
-    return await this.auctionRepository.save(auction);
+    const auction = await this.auctionRepository.save(auctionPayload);
+
+    return plainToInstance(AuctionResponseDto, auction, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async findAll() {
-    return await this.auctionRepository.find();
+    const auctions = await this.auctionRepository.find();
+
+    return plainToInstance(AuctionResponseDto, auctions, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async findOne(id: number): Promise<AuctionResponseDto | null> {
