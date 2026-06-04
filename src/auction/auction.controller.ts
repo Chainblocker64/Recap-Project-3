@@ -1,23 +1,14 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { AuctionService } from './auction.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
-import { UpdateAuctionDto } from './dto/update-auction.dto';
 
 @Controller('auctions')
 export class AuctionController {
   constructor(private readonly auctionService: AuctionService) {}
 
   @Post()
-  create(@Body() createAuctionDto: CreateAuctionDto) {
-    return this.auctionService.create(createAuctionDto);
+  async create(@Body() createAuctionDto: CreateAuctionDto) {
+    return await this.auctionService.create(createAuctionDto);
   }
 
   @Get()
@@ -28,15 +19,5 @@ export class AuctionController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.auctionService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuctionDto: UpdateAuctionDto) {
-    return this.auctionService.update(+id, updateAuctionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.auctionService.remove(+id);
   }
 }

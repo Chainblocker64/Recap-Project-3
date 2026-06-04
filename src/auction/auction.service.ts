@@ -1,7 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAuctionDto } from './dto/create-auction.dto';
-import { UpdateAuctionDto } from './dto/update-auction.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auction } from './entities/auction.entity';
 import { Repository } from 'typeorm';
@@ -19,16 +18,16 @@ export class AuctionService {
       ? new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // Default to 3 days from now
       : new Date(createAuctionDto.endDate);
 
-    const auction = await this.auctionRepository.create({
+    const auction = this.auctionRepository.create({
       ...createAuctionDto,
-      endDate,
+      endDate: endDate,
     });
 
     return await this.auctionRepository.save(auction);
   }
 
-  findAll() {
-    return this.auctionRepository.find();
+  async findAll() {
+    return await this.auctionRepository.find();
   }
 
   async findOne(id: number): Promise<AuctionResponseDto | null> {
@@ -41,13 +40,5 @@ export class AuctionService {
     return plainToInstance(AuctionResponseDto, auction, {
       excludeExtraneousValues: true,
     });
-  }
-
-  update(id: number, updateAuctionDto: UpdateAuctionDto) {
-    return `This action updates a #${id} auction`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auction`;
   }
 }
