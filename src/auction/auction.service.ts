@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Auction } from './entities/auction.entity';
 import {
   Between,
-  FindManyOptions,
   FindOperator,
   LessThanOrEqual,
   MoreThan,

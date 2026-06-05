@@ -1,10 +1,19 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AuctionService } from './auction.service';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { OfferService } from 'src/offer/offer.service';
 import { CreateOfferDto } from 'src/offer/dto/create-offer.dto';
 import { OfferResponseDto } from 'src/offer/dto/offer-response.dto';
 import { FilterDto } from 'src/auction/dto/filter.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('auctions')
 export class AuctionController {
@@ -18,6 +27,7 @@ export class AuctionController {
     return await this.auctionService.create(createAuctionDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Query() filter: FilterDto) {
     return this.auctionService.findAll(filter);
