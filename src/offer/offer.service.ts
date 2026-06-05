@@ -43,7 +43,9 @@ export class OfferService {
       throw new ConflictException('Bid does not exceed current price');
     }
 
-    if (user.id === auction.seller.id) {
+    console.log(user, auction);
+
+    if (user.id === auction.sellerId) {
       throw new ConflictException('You are the seller in this auction');
     }
 
