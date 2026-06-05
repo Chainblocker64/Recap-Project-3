@@ -24,8 +24,4 @@ export class CreateAuctionDto {
   @IsOptional()
   @IsDate()
   endDate!: Date;
-
-  @IsString()
-  @IsNotEmpty()
-  seller!: string;
 }

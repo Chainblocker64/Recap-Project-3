@@ -1,4 +1,6 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { OfferResponseDto } from 'src/offer/dto/offer-response.dto';
+import { UserResponseDto } from 'src/user/dto/user-response.dto';
 
 export class AuctionResponseDto {
   @Expose()
@@ -20,7 +22,12 @@ export class AuctionResponseDto {
   endDate!: Date;
 
   @Expose()
-  seller!: string;
+  @Type(() => UserResponseDto)
+  seller!: UserResponseDto;
+
+  @Expose()
+  @Type(() => OfferResponseDto)
+  offers!: OfferResponseDto[];
 
   @Expose()
   createdAt!: Date;

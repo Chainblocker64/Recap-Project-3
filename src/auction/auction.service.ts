@@ -73,6 +73,12 @@ export class AuctionService {
       take: limit,
       where: whereFilters,
       order: { endDate: sort },
+      relations: {
+        seller: true,
+        offers: {
+          buyer: true,
+        },
+      },
     });
 
     const auctionResponse = {

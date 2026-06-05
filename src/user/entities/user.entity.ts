@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
-import { Auction } from 'src/auction/entities/auction.entity';
-import { Offer } from 'src/offer/entities/offer.entity';
+import { Auction } from '../../auction/entities/auction.entity';
+import { Offer } from '../../offer/entities/offer.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('users')
