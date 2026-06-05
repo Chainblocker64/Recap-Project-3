@@ -1,4 +1,12 @@
-import { IsInt, IsOptional, Min, Max, IsIn, IsNumber } from 'class-validator';
+import {
+  IsInt,
+  IsOptional,
+  Min,
+  Max,
+  IsIn,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
 export class FilterDto {
@@ -30,9 +38,7 @@ export class FilterDto {
   @Min(0.01)
   maxPrice?: number;
 
-  //TODO
   @IsOptional()
   @IsIn(['asc', 'desc'])
-  @Type(() => String)
-  sort!: string;
+  sort?: 'asc' | 'desc';
 }

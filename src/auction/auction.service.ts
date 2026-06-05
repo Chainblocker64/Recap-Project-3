@@ -5,10 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Auction } from './entities/auction.entity';
 import {
   Between,
+  FindManyOptions,
   FindOperator,
   LessThanOrEqual,
   MoreThan,
-  MoreThanOrEqual,
   Repository,
 } from 'typeorm';
 import { AuctionResponseDto } from './dto/auction-response.dto';
@@ -40,7 +40,7 @@ export class AuctionService {
   }
 
   async findAll(filter: FilterDto) {
-    const { status, page, limit, minPrice, maxPrice } = filter;
+    const { status, page, limit, minPrice, maxPrice, sort } = filter;
 
     const whereFilters: {
       endDate?: FindOperator<Date>;
@@ -67,15 +67,14 @@ export class AuctionService {
       }
     }
 
-    const auctions = await this.auctionRepository.findAndCount({
+    const [data, total] = await this.auctionRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
       where: whereFilters,
+      order: { endDate: sort },
     });
 
-    console.log(auctions);
-
-    /*const auctionResponse = {
+    const auctionResponse = {
       data: plainToInstance(AuctionResponseDto, data, {
         excludeExtraneousValues: true,
       }),
@@ -87,7 +86,7 @@ export class AuctionService {
       },
     };
 
-    return auctionResponse;*/
+    return auctionResponse;
   }
 
   async findOne(id: number): Promise<AuctionResponseDto | null> {
