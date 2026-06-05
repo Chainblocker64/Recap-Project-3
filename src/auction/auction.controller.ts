@@ -36,6 +36,7 @@ export class AuctionController {
 
   @Get()
   findAll(@Query() filter: FilterDto) {
+    console.log(filter);
     return this.auctionService.findAll(filter);
   }
 
@@ -52,6 +53,10 @@ export class AuctionController {
     @Request() req: { user: AuthenticatedUser },
   ): Promise<OfferResponseDto> {
     const user = req.user;
-    return await this.offerService.create(user, Number(auctionId), createOfferDto);
+    return await this.offerService.create(
+      user,
+      Number(auctionId),
+      createOfferDto,
+    );
   }
 }

@@ -13,7 +13,7 @@ import {
 })
 export class CreateAuctionDto {
   @ApiProperty({
-    name: 'Auction title',
+    description: 'Auction title',
     example: 'Apple AirPods Pro',
   })
   @IsString()
@@ -21,7 +21,7 @@ export class CreateAuctionDto {
   title!: string;
 
   @ApiProperty({
-    name: 'Auction description',
+    description: 'Auction description',
     example: 'Apple AirPods Pro description',
   })
   @IsString()
@@ -29,7 +29,7 @@ export class CreateAuctionDto {
   description!: string;
 
   @ApiProperty({
-    name: 'Starting price',
+    description: 'Starting price',
     example: 300,
   })
   @IsNumber({ maxDecimalPlaces: 2 })
@@ -38,7 +38,7 @@ export class CreateAuctionDto {
   startingPrice!: number;
 
   @ApiProperty({
-    name: 'Auction end date',
+    description: 'Auction end date',
     example: '2026-06-04T10:04:58.000Z',
   })
   @IsOptional()

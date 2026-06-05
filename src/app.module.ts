@@ -16,6 +16,8 @@ import { User } from './user/entities/user.entity';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    UserModule,
+    AuthModule,
     AuctionModule,
     OfferModule,
     TypeOrmModule.forRoot({
@@ -27,8 +29,6 @@ import { User } from './user/entities/user.entity';
       enableWAL: true,
       statementCacheSize: 100,
     }),
-    UserModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

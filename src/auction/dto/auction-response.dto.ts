@@ -8,49 +8,49 @@ import { UserResponseDto } from 'src/user/dto/user-response.dto';
 })
 export class AuctionResponseDto {
   @ApiProperty({
-    name: 'Auction ID',
-    example: 2,
+    description: 'Auction ID',
+    example: 1,
   })
   @Expose()
   id!: number;
 
   @ApiProperty({
-    name: 'Auction title',
+    description: 'Auction title',
     example: 'Apple AirPods',
   })
   @Expose()
   title!: string;
 
   @ApiProperty({
-    name: 'Auction description',
+    description: 'Auction description',
     example: 'Apple AirPods description',
   })
   @Expose()
   description!: string;
 
   @ApiProperty({
-    name: 'Auction current bid proce',
+    description: 'Auction current bid proce',
     example: 99.99,
   })
   @Expose()
   currentPrice!: number;
 
   @ApiProperty({
-    name: 'Auction start date',
+    description: 'Auction start date',
     example: '2026-06-07T10:04:48.524Z',
   })
   @Expose()
   startDate!: Date;
 
   @ApiProperty({
-    name: 'Auction end date',
+    description: 'Auction end date',
     example: '2026-06-07T10:04:48.524Z',
   })
   @Expose()
   endDate!: Date;
 
   @ApiProperty({
-    name: 'Seller information',
+    description: 'Seller information',
     example: 'John Doe',
   })
   @Expose()
@@ -58,7 +58,7 @@ export class AuctionResponseDto {
   seller!: UserResponseDto;
 
   @ApiProperty({
-    name: 'Bid history',
+    description: 'Bid history',
     example: [
       {
         id: 1,
@@ -81,7 +81,7 @@ export class AuctionResponseDto {
   offers!: OfferResponseDto[];
 
   @ApiProperty({
-    name: 'Creation date',
+    description: 'Creation date',
     example: '2026-06-07T10:05:48.524Z',
   })
   @Expose()

@@ -7,8 +7,9 @@ import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 })
 export class FilterDto {
   @ApiProperty({
-    name: 'Page',
-    example: 2,
+    description: 'Page',
+    example: 1,
+    required: false,
   })
   @IsOptional()
   @IsInt()
@@ -17,8 +18,8 @@ export class FilterDto {
   page: number = 1;
 
   @ApiProperty({
-    name: 'Amount of items per page',
     example: 10,
+    required: false,
   })
   @IsOptional()
   @IsInt()
@@ -28,17 +29,17 @@ export class FilterDto {
   limit: number = 10;
 
   @ApiProperty({
-    name: 'Status of the auction',
     example: 'open',
+    required: false,
   })
   @IsOptional()
   @IsIn(['open', 'closed'])
   @Type(() => String)
-  status!: string;
+  status: string;
 
   @ApiProperty({
-    name: 'Minimal price of the auction',
-    example: 10.99,
+    example: 0,
+    required: false,
   })
   @IsOptional()
   @IsNumber()
@@ -46,8 +47,8 @@ export class FilterDto {
   minPrice?: number = 0;
 
   @ApiProperty({
-    name: 'Maximal price of the auction',
-    example: 10.99,
+    example: 10_000,
+    required: false,
   })
   @IsOptional()
   @IsNumber()
@@ -55,8 +56,8 @@ export class FilterDto {
   maxPrice?: number;
 
   @ApiProperty({
-    name: 'Sorting order of the response',
     example: 'desc',
+    required: false,
   })
   @IsOptional()
   @IsIn(['asc', 'desc'])
