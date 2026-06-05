@@ -13,6 +13,7 @@ import {
 import { AuctionResponseDto } from './dto/auction-response.dto';
 import { FilterDto } from './dto/filter.dto';
 import { AuthenticatedUser } from 'src/auth/types/authenticated-user';
+import { Status } from './types/status';
 
 @Injectable()
 export class AuctionService {
@@ -35,9 +36,14 @@ export class AuctionService {
 
     const auction = await this.auctionRepository.save(auctionPayload);
 
-    return plainToInstance(AuctionResponseDto, auction, {
-      excludeExtraneousValues: true,
-    });
+    //TODO test if status works
+    return plainToInstance(
+      AuctionResponseDto,
+      { ...auction, status: this.getAuctionStatus(endDate) },
+      {
+        excludeExtraneousValues: true,
+      },
+    );
   }
 
   async findAll(filter: FilterDto) {
@@ -106,5 +112,13 @@ export class AuctionService {
     return plainToInstance(AuctionResponseDto, auction, {
       excludeExtraneousValues: true,
     });
+  }
+
+  getAuctionStatus(endDate: Date): Status {
+    let status: Status = 'open';
+    if (new Date() > endDate) {
+      status = 'closed';
+    }
+    return status;
   }
 }

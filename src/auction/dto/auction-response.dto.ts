@@ -86,4 +86,7 @@ export class AuctionResponseDto {
   })
   @Expose()
   createdAt!: Date;
+
+  @Expose
+  status!: 'open' | 'closed';
 }
