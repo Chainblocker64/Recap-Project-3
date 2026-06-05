@@ -2,6 +2,7 @@ import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 import { OfferResponseDto } from 'src/offer/dto/offer-response.dto';
 import { UserResponseDto } from 'src/user/dto/user-response.dto';
+import type { Status } from '../types/status';
 
 @ApiSchema({
   name: 'Auction Response',
@@ -88,5 +89,5 @@ export class AuctionResponseDto {
   createdAt!: Date;
 
   @Expose()
-  status!: 'open' | 'closed';
+  status!: Status;
 }
