@@ -22,17 +22,13 @@ export class FilterDto {
 
   @IsOptional()
   @IsNumber()
-  @Min(0.01)
-  @Type(() => Number)
-  @Transform(() => 'min-price')
-  minPrice: number = 10;
+  @Min(0)
+  minPrice?: number = 0;
 
   @IsOptional()
   @IsNumber()
   @Min(0.01)
-  @Type(() => Number)
-  @Transform(() => 'max-price')
-  maxPrice: number = 10;
+  maxPrice?: number;
 
   //TODO
   @IsOptional()

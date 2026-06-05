@@ -3,7 +3,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAuctionDto } from './dto/create-auction.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auction } from './entities/auction.entity';
-import { LessThanOrEqual, Repository } from 'typeorm';
+import {
+  Between,
+  FindOperator,
+  LessThanOrEqual,
+  MoreThan,
+  MoreThanOrEqual,
+  Repository,
+} from 'typeorm';
 import { AuctionResponseDto } from './dto/auction-response.dto';
 import { FilterDto } from './dto/filter.dto';
 
@@ -33,30 +40,37 @@ export class AuctionService {
   }
 
   async findAll(filter: FilterDto) {
-    const { status, page, limit } = filter;
+    const { status, page, limit, minPrice, maxPrice } = filter;
 
-    /*
-    WIP
-    let whereFilters:  = {};
+    const whereFilters: {
+      endDate?: FindOperator<Date>;
+      currentPrice?: FindOperator<any>;
+    } = {};
 
     switch (status) {
       case 'open':
-        whereFilters.startingPrice = LessThanOrEqual(1);
+        whereFilters.endDate = MoreThan(new Date());
         break;
       case 'closed':
+        whereFilters.endDate = LessThanOrEqual(new Date());
         break;
     }
 
-    console.log(status);
-    */
+    if (minPrice || maxPrice) {
+      if (!maxPrice) {
+        whereFilters.currentPrice = MoreThan(minPrice);
+      } else {
+        whereFilters.currentPrice = Between(minPrice, maxPrice);
+      }
+    }
 
-    const [data, total] = await this.auctionRepository.findAndCount({
+    const auctions = await this.auctionRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
       where: whereFilters,
     });
 
-    const auctionResponse = {
+    /*const auctionResponse = {
       data: plainToInstance(AuctionResponseDto, data, {
         excludeExtraneousValues: true,
       }),
@@ -68,7 +82,7 @@ export class AuctionService {
       },
     };
 
-    return auctionResponse;
+    return auctionResponse;*/
   }
 
   async findOne(id: number): Promise<AuctionResponseDto | null> {

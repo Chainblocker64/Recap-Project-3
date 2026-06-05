@@ -1,4 +1,5 @@
 import {
+  IsDate,
   IsDateString,
   IsNotEmpty,
   IsNumber,
@@ -22,7 +23,7 @@ export class CreateAuctionDto {
   startingPrice!: number;
 
   @IsOptional()
-  @IsDateString()
+  @IsDate()
   endDate!: Date;
 
   @IsString()
