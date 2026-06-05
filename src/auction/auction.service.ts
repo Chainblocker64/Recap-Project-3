@@ -47,6 +47,7 @@ export class AuctionService {
       currentPrice?: FindOperator<any>;
     } = {};
 
+    // Apply status filter
     switch (status) {
       case 'open':
         whereFilters.endDate = MoreThan(new Date());
@@ -56,11 +57,13 @@ export class AuctionService {
         break;
     }
 
+    // Apply price filters
     if (minPrice || maxPrice) {
-      if (!maxPrice) {
-        whereFilters.currentPrice = MoreThan(minPrice);
-      } else {
+      if (maxPrice) {
         whereFilters.currentPrice = Between(minPrice, maxPrice);
+      } else {
+        // If no max price is set, we only need to go higher than the min price
+        whereFilters.currentPrice = MoreThan(minPrice);
       }
     }
 
@@ -69,6 +72,8 @@ export class AuctionService {
       take: limit,
       where: whereFilters,
     });
+
+    console.log(auctions);
 
     /*const auctionResponse = {
       data: plainToInstance(AuctionResponseDto, data, {
