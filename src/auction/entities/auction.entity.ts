@@ -1,3 +1,4 @@
+import { User } from 'src/user/entities/user.entity';
 import { Offer } from '../../offer/entities/offer.entity';
 import {
   Entity,
@@ -5,6 +6,8 @@ import {
   Column,
   CreateDateColumn,
   OneToMany,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity('auctions')
@@ -27,12 +30,16 @@ export class Auction {
   @Column({ type: 'datetime' })
   endDate!: Date;
 
-  @Column({ type: 'varchar' })
-  seller!: string;
+  @Column({ type: 'numeric' })
+  sellerId!: number;
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt!: Date;
 
   @OneToMany(() => Offer, (offer) => offer.auction)
   offers!: Offer[];
+
+  @ManyToOne(() => User, (user: User) => user.auctions, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'sellerId' })
+  seller!: User;
 }

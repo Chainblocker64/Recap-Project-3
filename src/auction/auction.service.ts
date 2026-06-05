@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import { AuctionResponseDto } from './dto/auction-response.dto';
 import { FilterDto } from './dto/filter.dto';
+import { AuthenticatedUser } from 'src/auth/types/authenticated-user';
 
 @Injectable()
 export class AuctionService {
@@ -20,7 +21,7 @@ export class AuctionService {
     private auctionRepository: Repository<Auction>,
   ) {}
 
-  async create(createAuctionDto: CreateAuctionDto) {
+  async create(user: AuthenticatedUser, createAuctionDto: CreateAuctionDto) {
     const endDate = !createAuctionDto.endDate
       ? new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // Default to 3 days from now
       : new Date(createAuctionDto.endDate);
@@ -29,6 +30,7 @@ export class AuctionService {
       ...createAuctionDto,
       endDate: endDate,
       currentPrice: createAuctionDto.startingPrice,
+      sellerId: user.id,
     });
 
     const auction = await this.auctionRepository.save(auctionPayload);

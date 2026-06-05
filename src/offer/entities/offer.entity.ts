@@ -1,3 +1,4 @@
+import { User } from 'src/user/entities/user.entity';
 import { Auction } from '../../auction/entities/auction.entity';
 import {
   Entity,
@@ -19,8 +20,8 @@ export class Offer {
   @Column({ type: 'numeric' })
   auctionId!: number;
 
-  @Column({ type: 'varchar' })
-  buyer!: string;
+  @Column({ type: 'numeric' })
+  buyerId!: number;
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt!: Date;
@@ -30,4 +31,8 @@ export class Offer {
   })
   @JoinColumn({ name: 'auctionId' })
   auction!: Auction;
+
+  @ManyToOne(() => User, (user: User) => user.offers, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'buyerId' })
+  buyer!: User;
 }
