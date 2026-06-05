@@ -11,6 +11,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 import { OfferResponseDto } from './dto/offer-response.dto';
+import { AuthenticatedUser } from 'src/auth/types/authenticated-user';
 
 @Injectable()
 export class OfferService {
@@ -22,6 +23,7 @@ export class OfferService {
   ) {}
 
   async create(
+    user: AuthenticatedUser,
     auctionId: number,
     createOfferDto: CreateOfferDto,
   ): Promise<OfferResponseDto> {
@@ -39,6 +41,10 @@ export class OfferService {
 
     if (auction.currentPrice >= createOfferDto.bidPrice) {
       throw new ConflictException('Bid does not exceed current price');
+    }
+
+    if (user.id === auction.seller.id) {
+      throw new ConflictException('You are the seller in this auction');
     }
 
     const offerPayload = this.offerRepository.create({

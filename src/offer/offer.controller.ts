@@ -15,13 +15,6 @@ import { UpdateOfferDto } from './dto/update-offer.dto';
 export class OfferController {
   constructor(private readonly offerService: OfferService) {}
 
-  /*
-  @Post()
-  create(@Body() createOfferDto: CreateOfferDto) {
-    return this.offerService.create(createOfferDto);
-  }
-  */
-
   @Get()
   findAll() {
     return this.offerService.findAll();

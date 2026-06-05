@@ -49,7 +49,9 @@ export class AuctionController {
   async addOffer(
     @Param('id') auctionId: string,
     @Body() createOfferDto: CreateOfferDto,
+    @Request() req: { user: AuthenticatedUser },
   ): Promise<OfferResponseDto> {
-    return await this.offerService.create(Number(auctionId), createOfferDto);
+    const user = req.user;
+    return await this.offerService.create(user, Number(auctionId), createOfferDto);
   }
 }
